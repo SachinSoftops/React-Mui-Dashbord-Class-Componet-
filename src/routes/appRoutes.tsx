@@ -18,6 +18,7 @@ import InstallationPage from "../pages/installation/InstallationPage";
 import DocumentationPage from "../pages/documentation/DocumentationPage";
 import ComputerIcon from "@material-ui/icons/Computer";
 import AllProduct from "../pages/documentation/AllProduct";
+import DefaultComponent from "../pages/DefaultComponent/DefaultComponent";
 const appRoutes: RouteType[] = [
   {
     index: true,
@@ -144,6 +145,11 @@ const appRoutes: RouteType[] = [
       displayText: "Changelog",
       icon: <FormatListBulletedOutlinedIcon />,
     },
+  },
+  {
+    path: "*",
+    element: <DefaultComponent />,
+    state: "notFound",
   },
 ];
 

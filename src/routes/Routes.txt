@@ -1,0 +1,83 @@
+const appRoutes: RouteType[] = [
+  {
+    index: true,
+    element: <HomePage />,
+    state: "home",
+  },
+  {
+    path: "/all-products",
+    element: <AllProduct />,
+    state: "allProducts.alert",
+    sidebarProps: {
+      displayText: "All Products",
+      icon: <ComputerIcon />,
+    },
+    child: [
+      {
+        path: "/all-products/alert",
+        element: <AlertPage />,
+        state: "allProducts",
+        sidebarProps: {
+          displayText: "Alert",
+        },
+        child: [
+          {
+            index: true,
+            element: <DashboardIndex />,
+            state: "dashboard.index",
+          },
+          {
+            path: "/all-products/dashboard/default",
+            element: <DefaultPage />,
+            state: "dashboard.alert.default",
+            sidebarProps: {
+              displayText: "Default",
+            },
+          },
+          {
+            path: "/all-products/dashboard/analytics",
+            element: <AnalyticsPage />,
+            state: "dashboard.alert.analytics",
+            sidebarProps: {
+              displayText: "Analytics",
+            },
+          },
+          {
+            path: "/all-products/dashboard/saas",
+            element: <SaasPage />,
+            state: "dashboard.alert.saas",
+            sidebarProps: {
+              displayText: "Saas",
+            },
+          },
+        ],
+      },
+    ],
+  },
+  // Add a new route for NewProductPage
+  // ... other routes
+
+  {
+    path: "/documentation",
+    element: <DocumentationPage />,
+    state: "documentation",
+    sidebarProps: {
+      displayText: "Documentation",
+      icon: <ArticleOutlinedIcon />,
+    },
+  },
+  {
+    path: "/changelog",
+    element: <ChangelogPage />,
+    state: "changelog",
+    sidebarProps: {
+      displayText: "Changelog",
+      icon: <FormatListBulletedOutlinedIcon />,
+    },
+  },
+  {
+    path: "*",
+    element: <DefaultComponent />,
+    state: "notFound",
+  },
+];
