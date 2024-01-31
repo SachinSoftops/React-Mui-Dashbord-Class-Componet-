@@ -7,21 +7,49 @@ import ChangelogPage from "../pages/changelog/ChangelogPage";
 import AnalyticsPage from "../pages/dashboard/AnalyticsPage";
 import SaasPage from "../pages/dashboard/SaasPage";
 import ComponentPageLayout from "../pages/component/ComponentPageLayout";
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import AppsOutlinedIcon from '@mui/icons-material/AppsOutlined';
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import AppsOutlinedIcon from "@mui/icons-material/AppsOutlined";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
+import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
+import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import AlertPage from "../pages/component/AlertPage";
 import ButtonPage from "../pages/component/ButtonPage";
 import InstallationPage from "../pages/installation/InstallationPage";
 import DocumentationPage from "../pages/documentation/DocumentationPage";
-
+import ComputerIcon from "@material-ui/icons/Computer";
+import AllProduct from "../pages/documentation/AllProduct";
 const appRoutes: RouteType[] = [
   {
     index: true,
     element: <HomePage />,
-    state: "home"
+    state: "home",
+  },
+  {
+    path: "/allProducts",
+    element: <AllProduct />,
+    state: "allProducts.alert",
+    sidebarProps: {
+      displayText: "All Products",
+      icon: <ComputerIcon />,
+    },
+    child: [
+      {
+        path: "/allProducts/alert",
+        element: <AlertPage />,
+        state: "allProducts.alert",
+        sidebarProps: {
+          displayText: "Alert",
+        },
+      },
+      {
+        path: "/allProducts/button",
+        element: <ButtonPage />,
+        state: "allProducts.button",
+        sidebarProps: {
+          displayText: "Button",
+        },
+      },
+    ],
   },
   {
     path: "/installation",
@@ -29,8 +57,8 @@ const appRoutes: RouteType[] = [
     state: "installation",
     sidebarProps: {
       displayText: "Installation",
-      icon: <FileDownloadOutlinedIcon />
-    }
+      icon: <FileDownloadOutlinedIcon />,
+    },
   },
   {
     path: "/dashboard",
@@ -38,20 +66,20 @@ const appRoutes: RouteType[] = [
     state: "dashboard",
     sidebarProps: {
       displayText: "Dashboard",
-      icon: <DashboardOutlinedIcon />
+      icon: <DashboardOutlinedIcon />,
     },
     child: [
       {
         index: true,
         element: <DashboardIndex />,
-        state: "dashboard.index"
+        state: "dashboard.index",
       },
       {
         path: "/dashboard/default",
         element: <DefaultPage />,
         state: "dashboard.default",
         sidebarProps: {
-          displayText: "Default"
+          displayText: "Default",
         },
       },
       {
@@ -59,18 +87,18 @@ const appRoutes: RouteType[] = [
         element: <AnalyticsPage />,
         state: "dashboard.analytics",
         sidebarProps: {
-          displayText: "Analytic"
-        }
+          displayText: "Analytic",
+        },
       },
       {
         path: "/dashboard/saas",
         element: <SaasPage />,
         state: "dashboard.saas",
         sidebarProps: {
-          displayText: "Saas"
-        }
-      }
-    ]
+          displayText: "Saas",
+        },
+      },
+    ],
   },
   {
     path: "/component",
@@ -78,7 +106,7 @@ const appRoutes: RouteType[] = [
     state: "component",
     sidebarProps: {
       displayText: "Components",
-      icon: <AppsOutlinedIcon />
+      icon: <AppsOutlinedIcon />,
     },
     child: [
       {
@@ -86,7 +114,7 @@ const appRoutes: RouteType[] = [
         element: <AlertPage />,
         state: "component.alert",
         sidebarProps: {
-          displayText: "Alert"
+          displayText: "Alert",
         },
       },
       {
@@ -94,10 +122,10 @@ const appRoutes: RouteType[] = [
         element: <ButtonPage />,
         state: "component.button",
         sidebarProps: {
-          displayText: "Button"
-        }
-      }
-    ]
+          displayText: "Button",
+        },
+      },
+    ],
   },
   {
     path: "/documentation",
@@ -105,8 +133,8 @@ const appRoutes: RouteType[] = [
     state: "documentation",
     sidebarProps: {
       displayText: "Documentation",
-      icon: <ArticleOutlinedIcon />
-    }
+      icon: <ArticleOutlinedIcon />,
+    },
   },
   {
     path: "/changelog",
@@ -114,9 +142,9 @@ const appRoutes: RouteType[] = [
     state: "changelog",
     sidebarProps: {
       displayText: "Changelog",
-      icon: <FormatListBulletedOutlinedIcon />
-    }
-  }
+      icon: <FormatListBulletedOutlinedIcon />,
+    },
+  },
 ];
 
 export default appRoutes;
