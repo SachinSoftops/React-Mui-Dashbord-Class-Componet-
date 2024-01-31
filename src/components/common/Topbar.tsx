@@ -5,12 +5,11 @@ import sizeConfigs from "../../configs/sizeConfigs";
 import { Link } from "react-router-dom";
 // Define your custom styles using styled
 const Avatar = styled("img")({
-  width: 40, // Set the width of the avatar
-  height: 40, // Set the height of the avatar
-  marginRight: 1, // Add some margin to the right
+  width: 40, 
+  height: 40, 
+  marginRight: 1, 
 });
 
-// Define the interface for the component's state
 interface TopbarState {
   isLogoutVisible: boolean;
 }
@@ -23,7 +22,6 @@ class Topbar extends Component<{}, TopbarState> {
     };
   }
 
-  // Handle the toggle of logout visibility
   handleToggleLogout = () => {
     this.setState((prevState) => ({
       isLogoutVisible: !prevState.isLogoutVisible,
