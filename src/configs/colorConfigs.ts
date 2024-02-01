@@ -2,16 +2,16 @@ import { colors } from "@mui/material";
 
 const colorConfigs = {
   sidebar: {
-    bg: "#427fde",
-    color: "#eeeeee",   // all the css of side bar color bg color 
-    hoverBg: "#404a59",  // hover active color 
-    activeBg: "#32435e"
+    bg: "#233044",
+    color: "#eeeeee",
+    hoverBg: "#1e293a",   // all the css of side bar color bg color 
+    activeBg: "#1e253a"
   },
   topbar: {
-    bg: "#fff",   // Main top Bg  Color 
-    color: "#000"   // Main top text   Color 
+    bg: "#fff",
+    color: "#000"  // all the css of Top  bar color bg color 
   },
-  mainBg: colors.red["100"]  // Main Bg color 
-};
+  mainBg: colors.grey["100"]
+};      // all the css of Main DashBoard color bg color 
 
 export default colorConfigs;
