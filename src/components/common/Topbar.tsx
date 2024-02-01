@@ -3,6 +3,7 @@ import { AppBar, Box, Toolbar, Typography, styled } from "@mui/material";
 import colorConfigs from "../../configs/colorConfigs";
 import sizeConfigs from "../../configs/sizeConfigs";
 import { Link } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
 // Define your custom styles using styled
 const Avatar = styled("img")({
   width: 40, 
@@ -47,7 +48,7 @@ class Topbar extends Component<{}, TopbarState> {
             React Class with dropdown UI
           </Typography>
           <Box sx={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
-            <div onClick={this.handleToggleLogout}>
+            <div style={{display: 'flex'}} onClick={this.handleToggleLogout}>
               <Avatar
                 src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                 alt="Avatar"
@@ -66,13 +67,14 @@ class Topbar extends Component<{}, TopbarState> {
               </Box>
             </div>
           </Box>
-           {isLogoutVisible && (
+          <Box ml={2}>
               <Link to="/"  >
                 {" "}
-                <i className="flaticon-logout"></i> Logout
+               <LogoutIcon/>
               </Link>
-            )}
+              </Box>
         </Toolbar>
+        
       </AppBar>
     );
   }
