@@ -45,7 +45,7 @@ class Topbar extends Component<{}, TopbarState> {
       >
         <Toolbar>
           <Typography variant="h6">
-            React Class with dropdown UI
+          Welcome to the Website  Dashboard 
           </Typography>
           <Box sx={{ marginLeft: 'auto', display: 'flex', alignItems: 'center' }}>
             <div style={{display: 'flex'}} onClick={this.handleToggleLogout}>
