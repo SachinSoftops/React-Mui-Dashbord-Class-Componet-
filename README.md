@@ -14,6 +14,8 @@
     - Create react app:https://create-react-app.dev/
     - Material-UI: https://mui.com/
     - React-router: https://reactrouter.com/
+    img of basic crud 
+    ![Alt text](<Screenshot 2024-02-02 at 4.23.48 PM.png>)
 
 # Preview
 
