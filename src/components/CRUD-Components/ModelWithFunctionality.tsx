@@ -214,12 +214,10 @@ class CrudComponents extends Component<{}, ItemCRUDState> {
               </TableRow>
             ))}
           </TableBody>
-        </Table>
+        </Table> 
       </div>
     );
   }
 }
 
 export default CrudComponents;
-
-

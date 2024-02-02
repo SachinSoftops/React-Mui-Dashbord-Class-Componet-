@@ -7,7 +7,7 @@ import Sidebar from "../common/Sidebar";
 import Topbar from "../common/Topbar";
 
 class MainLayout extends Component {
-  render() {
+  render() { 
     return (
       <Box sx={{ display: "flex" }}>
         <Topbar />

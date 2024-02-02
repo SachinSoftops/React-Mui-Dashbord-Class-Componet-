@@ -8,13 +8,15 @@
 ![Alt text](<Screenshot 2024-02-02 at 12.14.42 PM.png>)
     ![Alt text](image.png)
     ![Alt text](<Screenshot 2024-02-01 at 4.41.45 PM.png>)
-![Alt text](<Screenshot 2024-02-01 at 4.41.41 PM.png>)
+![Alt text](<Screenshot 2024-02-01 at 4.41.41 PM.png>) 
+
+![Alt text](<Screenshot 2024-02-02 at 6.14.06 PM.png>) 
+
 # Reference
 
     - Create react app:https://create-react-app.dev/
     - Material-UI: https://mui.com/
     - React-router: https://reactrouter.com/
-![Alt text](<Screenshot 2024-02-02 at 4.23.48 PM-1.png>)
     ![Alt text](<Screenshot 2024-02-02 at 4.23.48 PM.png>)
 
 # Preview
