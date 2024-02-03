@@ -10,7 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import { Box, Container, DialogContentText } from "@mui/material";
+import { Box, Container, DialogContentText, TablePagination } from "@mui/material";
 import CloseIcon from "@material-ui/icons/Close";
 
 interface Item {
@@ -28,6 +28,8 @@ interface ItemCRUDState {
   isDialogOpen: boolean;
   isDeleteDialogOpen: boolean;
   deleteItemName: string | null;
+  page:any;
+  rowsPerPage: any;
 }
 
 class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
@@ -41,6 +43,8 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
       isDialogOpen: false,
       isDeleteDialogOpen: false,
       deleteItemName: "",
+      page: 0,
+      rowsPerPage: 5,
     };
   }
 
@@ -102,20 +106,6 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
     }
   };
 
-  // handleDeleteItem = (id: number) => {
-  //   if (window.confirm("Are you sure you want to delete this item?")) {
-  //     const updatedItems = this.state.items.filter((item) => item.id !== id);
-
-  //     this.setState(
-  //       {
-  //         items: updatedItems,
-  //         editItemId: null,
-  //       },
-  //       () => this.setItemToLocalStorage(updatedItems)
-  //     );
-  //   }
-  // };
-
   handleDeleteItem = (id: number) => {
     const itemToDelete = this.state.items.find((item) => item.id === id);
 
@@ -151,6 +141,18 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
     });
   };
 
+
+  handleChangePage = (event: any, newPage: any) => {
+    this.setState({ page: newPage });
+  };
+
+  handleChangeRowsPerPage = (event: any) => {
+    this.setState({
+      rowsPerPage: parseInt(event.target.value, 5),
+      page: 0,
+    });
+  };
+
   handleCloseDialog = () => {
     this.setState({
       newItem: { id: 0, name: "", description: "", age: 0 },
@@ -160,8 +162,9 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
   };
 
   render() {
-    const { newItem, items, isDialogOpen, editItemId, isDeleteDialogOpen } =
-      this.state;
+    const { newItem, items, isDialogOpen, editItemId, isDeleteDialogOpen, page, rowsPerPage } = this.state;
+
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, items.length - page * rowsPerPage);
 
     return (
       <div style={{ textAlign: "center" }}>
@@ -319,7 +322,10 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((item) => (
+              {(rowsPerPage > 0
+                ? items.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : items
+              ).map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.description}</TableCell>
@@ -328,6 +334,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
                     sx={{
                       display: "flex",
                       justifyContent: "center",
+                      padding:'5px'
                     }}
                   >
                     <Button
@@ -349,9 +356,27 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
                   </TableCell>
                 </TableRow>
               ))}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 23 * emptyRows }}>
+                  <TableCell colSpan={4} />
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </Container>
+
+        <TablePagination
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+          component="div"
+          count={items.length}
+          page={page}
+          onPageChange={this.handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={this.handleChangeRowsPerPage}
+        />
       </div>
     );
   }
