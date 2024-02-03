@@ -10,7 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
 interface Item {
   id: number;
@@ -122,8 +122,19 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
     return (
       <div style={{ textAlign: "center" }}>
         <h2>Employee Management System</h2>
+      <Box sx={{
+        height:'2px',
+        backgroundColor:'red',
+        width:'100%'
 
-        <Button
+      }} >
+
+      </Box >
+        <Button sx={{
+          marginTop:'30px',
+          display:'flex',
+          marginLeft:'30px'
+        }}
           variant="outlined"
           color="primary"
           onClick={() => this.setState({ isDialogOpen: true })}
@@ -131,7 +142,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
           Add User
         </Button>
        
-        <Dialog onClose={this.handleCloseDialog} open={isDialogOpen}>
+        <Dialog  onClose={this.handleCloseDialog} open={isDialogOpen}>
           <DialogTitle>
             {editItemId !== null ? "Edit User" : "Add User"}
           </DialogTitle>
@@ -180,8 +191,10 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
           </DialogActions>
         </Dialog>
 
-        <Container >
-          <Table style={{ width: "100%", alignItems: "center" }}>
+        <Container   sx={{
+          marginTop:'10px'
+        }}>
+          <Table style={{ width: "100%", alignItems: "center" , }}>
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>

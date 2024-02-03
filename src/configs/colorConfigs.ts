@@ -11,7 +11,7 @@ const colorConfigs = {
     bg: "#fff",
     color: "#000"  // all the css of Top  bar color bg color 
   },
-  mainBg: colors.grey["100"]
+  mainBg: '#f9f9f9'
 };      // all the css of Main DashBoard color bg color 
 
 export default colorConfigs;
