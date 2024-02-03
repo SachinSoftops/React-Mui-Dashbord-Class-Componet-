@@ -35,7 +35,7 @@ interface DialogTitleProps extends WithStyles<typeof styles> {
   onClose: () => void;
 }
 
-class DialogTitle extends React.Component<DialogTitleProps> {
+class UsingModelComponents extends React.Component<DialogTitleProps> {
   render() {
     const { children, classes, onClose, ...other } = this.props;
     return (
@@ -55,7 +55,7 @@ class DialogTitle extends React.Component<DialogTitleProps> {
   }
 }
 
-const StyledDialogTitle = withStyles(styles)(DialogTitle);
+const StyledDialogTitle = withStyles(styles)(UsingModelComponents);
 
 interface CustomizedDialogsState {
   open: boolean;
@@ -150,4 +150,4 @@ class CustomizedDialogs extends Component<{}, CustomizedDialogsState> {
   }
 }
 
-export default CustomizedDialogs;
+export default UsingModelComponents;

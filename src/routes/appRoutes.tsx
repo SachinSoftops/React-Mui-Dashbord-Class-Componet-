@@ -18,6 +18,7 @@ import InstallationPage from "../pages/installation/InstallationPage";
 import DocumentationPage from "../pages/documentation/DocumentationPage";
 import ComputerIcon from "@material-ui/icons/Computer";
 import AllProduct from "../pages/documentation/AllProduct";
+import MainComponents from "../components/CRUD-Components";
 import DefaultComponent from "../pages/DefaultComponent/DefaultComponent";
 const appRoutes: RouteType[] = [
   {
@@ -35,11 +36,11 @@ const appRoutes: RouteType[] = [
     },
     child: [
       {
-        path: "/allProducts/alert",
-        element: <AlertPage />,
-        state: "allProducts.alert",
+        path: "/allProducts/crud",
+        element: <MainComponents />,
+        state: "allProducts.crud",
         sidebarProps: {
-          displayText: "Alert",
+          displayText: "CRUD",
         },
       },
       {
