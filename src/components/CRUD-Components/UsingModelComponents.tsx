@@ -87,6 +87,7 @@ class CustomizedDialogs extends Component<{}, CustomizedDialogsState> {
         >
           Add User
         </Button>
+        
         <Dialog
           onClose={this.handleClose}
           aria-labelledby="customized-dialog-title"
