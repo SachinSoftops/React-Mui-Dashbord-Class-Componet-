@@ -182,17 +182,24 @@ class ModelWithFunctionality extends Component<{}, EmployeeManagementState> {
       rowsPerPage,
       searchValue,
     } = this.state;
-
+  
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, items.length - page * rowsPerPage);
-
+  
     const columns = [
       { headerName: "Name", field: "name" },
       { headerName: "Description", field: "description" },
       { headerName: "Age", field: "age" },
     ];
-
-    const paginatedData = items.slice(
+  
+    const filteredItems = items.filter(
+      (item) =>
+        item.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchValue.toLowerCase()) ||
+        item.age.toString().toLowerCase().includes(searchValue.toLowerCase())
+    );
+  
+    const paginatedData = filteredItems.slice(
       page * rowsPerPage,
       page * rowsPerPage + rowsPerPage
     );
@@ -373,6 +380,11 @@ class ModelWithFunctionality extends Component<{}, EmployeeManagementState> {
             marginTop: "10px",
           }}
         >
+           {filteredItems.length === 0 ? (
+          <Box sx={{
+            color:'red' 
+          }} >No data found</Box>
+        ) : (
           <Table style={{ width: "100%", alignItems: "center" }}>
             <TableHead>
               <TableRow>
@@ -440,6 +452,7 @@ class ModelWithFunctionality extends Component<{}, EmployeeManagementState> {
               )}
             </TableBody>
           </Table>
+        )}
         </Container>
 
         <TablePagination
