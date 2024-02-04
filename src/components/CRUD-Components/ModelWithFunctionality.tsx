@@ -10,9 +10,15 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import { DataGrid, GridToolbarContainer, GridToolbarExport, GridCellParams } from '@mui/x-data-grid';
-import { Box, Container, DialogContentText, TablePagination } from "@mui/material";
+import {
+  Box,
+  Container,
+  DialogContentText,
+  TablePagination,
+} from "@mui/material";
 import CloseIcon from "@material-ui/icons/Close";
+import { CSVLink } from "react-csv";
+import GetAppIcon from "@material-ui/icons/GetApp";
 
 interface Item {
   id: number;
@@ -29,18 +35,8 @@ interface ItemCRUDState {
   isDialogOpen: boolean;
   isDeleteDialogOpen: boolean;
   deleteItemName: string | null;
-  page: number;
-  rowsPerPage: number;
-}
-
-class CustomToolbar extends Component {
-  render() {
-    return (
-      <GridToolbarContainer>
-        <GridToolbarExport />
-      </GridToolbarContainer>
-    );
-  }
+  page: any;
+  rowsPerPage: any;
 }
 
 class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
@@ -60,16 +56,12 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
   }
 
   componentDidMount() {
-    this.loadItemsFromLocalStorage();
-  }
-
-  loadItemsFromLocalStorage() {
     const storedItems = localStorage.getItem("items");
     const items = storedItems ? JSON.parse(storedItems) : [];
     this.setState({ items });
   }
 
-  setItemsToLocalStorage(items: Item[]): void {
+  setItemToLocalStorage(items: Item[]): void {
     localStorage.setItem("items", JSON.stringify(items));
   }
 
@@ -83,13 +75,19 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
   handleAddItem = () => {
     const { items, newItem, editItemId } = this.state;
 
-    if (!this.isValidItem(newItem)) {
+    if (
+      !newItem.name.trim() ||
+      !newItem.description.trim() ||
+      newItem.age <= 0
+    ) {
       alert("Please enter valid data.");
       return;
     }
 
     const updatedItems = editItemId
-      ? items.map((item) => (item.id === editItemId ? { ...newItem, id: editItemId } : item))
+      ? items.map((item) =>
+          item.id === editItemId ? { ...newItem, id: editItemId } : item
+        )
       : [...items, { ...newItem, id: Date.now() }];
 
     this.setState(
@@ -99,13 +97,9 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
         editItemId: null,
         isDialogOpen: false,
       },
-      () => this.setItemsToLocalStorage(updatedItems)
+      () => this.setItemToLocalStorage(updatedItems)
     );
   };
-
-  isValidItem(item: Item): boolean {
-    return item.name.trim() !== "" && item.description.trim() !== "" && item.age > 0;
-  }
 
   handleEditItem = (id: number) => {
     const itemToEdit = this.state.items.find((item) => item.id === id);
@@ -143,7 +137,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
         deleteItemId: null,
         isDeleteDialogOpen: false,
       },
-      () => this.setItemsToLocalStorage(updatedItems)
+      () => this.setItemToLocalStorage(updatedItems)
     );
   };
 
@@ -154,13 +148,13 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
     });
   };
 
-  handleChangePage = (event: any, newPage: number) => {
+  handleChangePage = (event: any, newPage: any) => {
     this.setState({ page: newPage });
   };
 
-  handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+  handleChangeRowsPerPage = (event: any) => {
     this.setState({
-      rowsPerPage: parseInt(event.target.value, 10),
+      rowsPerPage: parseInt(event.target.value, 5),
       page: 0,
     });
   };
@@ -173,61 +167,34 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
     });
   };
 
-  getDataGridConfig() {
-    return {
-      columns: [
-        { field: 'name', headerName: 'Name', flex: 1 },
-        { field: 'description', headerName: 'Description', flex: 1 },
-        { field: 'age', headerName: 'Age', flex: 1 },
-        {
-          field: 'actions',
-          headerName: 'Actions',
-          flex: 1,
-          renderCell: (params: GridCellParams) => (
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                padding: '5px',
-              }}
-            >
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => this.handleEditItem(params.id as number)}
-                style={{ margin: '5px' }}
-              >
-                Edit
-              </Button>
-              <Button
-                variant="outlined"
-                style={{ margin: '5px' }}
-                color="secondary"
-                onClick={() => this.handleDeleteItem(params.id as number)}
-              >
-                Delete
-              </Button>
-            </Box>
-          ),
-        },
-      ],
-      rows: this.state.items.map((item) => ({
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        age: item.age,
-      })),
-    };
-  }
-
   render() {
-    const { isDialogOpen, editItemId, isDeleteDialogOpen, page, rowsPerPage } = this.state;
-    const { columns, rows } = this.getDataGridConfig();
+    const {
+      newItem,
+      items,
+      isDialogOpen,
+      editItemId,
+      isDeleteDialogOpen,
+      page,
+      rowsPerPage,
+    } = this.state;
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    const emptyRows =
+      rowsPerPage - Math.min(rowsPerPage, items.length - page * rowsPerPage);
+
+    // Create columns for CSVLink
+    const columns = [
+      { headerName: "Name", field: "name" },
+      { headerName: "Description", field: "description" },
+      { headerName: "Age", field: "age" },
+    ];
+
+    const paginatedData = items.slice(
+      page * rowsPerPage,
+      page * rowsPerPage + rowsPerPage
+    );
 
     return (
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: "center" }}>
         <h2>Employee Management System</h2>
         <Box
           sx={{
@@ -236,27 +203,44 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
             width: "100%",
           }}
         ></Box>
-        <Button
+        <Box
           sx={{
-            marginTop: "30px",
             display: "flex",
-            marginLeft: "30px",
+            marginTop: "30px",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
-          variant="outlined"
-          color="primary"
-          onClick={() => this.setState({ isDialogOpen: true })}
         >
-          Add User
-        </Button>
-
-        <DataGrid
-          columns={columns}
-          rows={rows}
-          components={{
-            Toolbar: CustomToolbar,
-          }}
-        />
-
+          <Button
+            sx={{
+             
+              display: "flex",
+              marginLeft: "30px",
+            }}
+            variant="outlined"
+            color="primary"
+            onClick={() => this.setState({ isDialogOpen: true })}
+          >
+            Add User
+          </Button>
+          <CSVLink
+            style={{
+              display: "flex",
+              textDecoration:'none',
+              marginRight: "30px",
+            }}
+            data={paginatedData} // Use paginatedData instead of items
+            headers={columns.map((col) => ({
+              label: col.headerName,
+              key: col.field,
+            }))}
+            filename={`table_data_page_${page + 1}.csv`}
+          >
+            <GetAppIcon /> EXPORT
+          </CSVLink>
+         
+        </Box>
+         
         <Dialog onClose={this.handleCloseDialog} open={isDialogOpen}>
           <DialogTitle>
             <Box
@@ -280,7 +264,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
           <DialogContent dividers>
             <TextField
               label="Name"
-              value={this.state.newItem.name}
+              value={newItem.name}
               onChange={this.handleInputChange}
               fullWidth
               margin="normal"
@@ -288,7 +272,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
             />
             <TextField
               label="Description"
-              value={this.state.newItem.description}
+              value={newItem.description}
               onChange={this.handleInputChange}
               fullWidth
               margin="normal"
@@ -296,7 +280,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
             />
             <TextField
               label="Age"
-              value={this.state.newItem.age}
+              value={newItem.age}
               onChange={this.handleInputChange}
               fullWidth
               margin="normal"
@@ -329,7 +313,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete this item?
+              Are you sure you want to delete this item ?
               <Box
                 sx={{
                   color: "red",
@@ -359,7 +343,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
                 backgroundColor: "red",
                 color: "white",
                 "&:hover": {
-                  backgroundColor: "#c11d1d",
+                  backgroundColor: "#c11d1d", // Change this to the color you want on hover
                 },
               }}
             >
@@ -391,8 +375,11 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                ? this.state.items.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : this.state.items
+                ? items.slice(
+                    page * rowsPerPage,
+                    page * rowsPerPage + rowsPerPage
+                  )
+                : items
               ).map((item) => (
                 <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
@@ -402,7 +389,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
                     sx={{
                       display: "flex",
                       justifyContent: "center",
-                      padding: '5px'
+                      padding: "5px",
                     }}
                   >
                     <Button
@@ -435,11 +422,11 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
 
         <TablePagination
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
+            display: "flex",
+            justifyContent: "center",
           }}
           component="div"
-          count={this.state.items.length}
+          count={items.length}
           page={page}
           onPageChange={this.handleChangePage}
           rowsPerPage={rowsPerPage}
