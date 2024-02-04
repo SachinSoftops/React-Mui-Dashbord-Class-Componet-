@@ -1,24 +1,26 @@
 import React, { ChangeEvent, Component } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import {
+  Button,
+  TextField,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   Box,
   Container,
-  DialogContentText,
   TablePagination,
+  InputAdornment,
+  DialogContentText,
 } from "@mui/material";
-import CloseIcon from "@material-ui/icons/Close";
 import { CSVLink } from "react-csv";
-import GetAppIcon from "@material-ui/icons/GetApp";
+import SearchIcon from "@mui/icons-material/Search";
+import GetAppIcon from "@mui/icons-material/GetApp";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface Item {
   id: number;
@@ -27,7 +29,7 @@ interface Item {
   age: number;
 }
 
-interface ItemCRUDState {
+interface EmployeeManagementState {
   items: Item[];
   newItem: Item;
   editItemId: number | null;
@@ -37,9 +39,10 @@ interface ItemCRUDState {
   deleteItemName: string | null;
   page: any;
   rowsPerPage: any;
+  searchValue: string;
 }
 
-class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
+class ModelWithFunctionality extends Component<{}, EmployeeManagementState> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -52,6 +55,7 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
       deleteItemName: "",
       page: 0,
       rowsPerPage: 5,
+      searchValue: "",
     };
   }
 
@@ -176,12 +180,12 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
       isDeleteDialogOpen,
       page,
       rowsPerPage,
+      searchValue,
     } = this.state;
 
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, items.length - page * rowsPerPage);
 
-    // Create columns for CSVLink
     const columns = [
       { headerName: "Name", field: "name" },
       { headerName: "Description", field: "description" },
@@ -213,7 +217,6 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
         >
           <Button
             sx={{
-             
               display: "flex",
               marginLeft: "30px",
             }}
@@ -223,13 +226,27 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
           >
             Add User
           </Button>
+
+          <TextField
+            label="Search"
+            value={searchValue}
+            onChange={(e) => this.setState({ searchValue: e.target.value })}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+
           <CSVLink
             style={{
               display: "flex",
-              textDecoration:'none',
+              textDecoration: "none",
               marginRight: "30px",
             }}
-            data={paginatedData} // Use paginatedData instead of items
+            data={paginatedData}
             headers={columns.map((col) => ({
               label: col.headerName,
               key: col.field,
@@ -238,9 +255,8 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
           >
             <GetAppIcon /> EXPORT
           </CSVLink>
-         
         </Box>
-         
+
         <Dialog onClose={this.handleCloseDialog} open={isDialogOpen}>
           <DialogTitle>
             <Box
@@ -374,43 +390,49 @@ class ModelWithFunctionality extends Component<{}, ItemCRUDState> {
               </TableRow>
             </TableHead>
             <TableBody>
-              {(rowsPerPage > 0
-                ? items.slice(
-                    page * rowsPerPage,
-                    page * rowsPerPage + rowsPerPage
-                  )
-                : items
-              ).map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>{item.description}</TableCell>
-                  <TableCell>{item.age}</TableCell>
-                  <TableCell
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      padding: "5px",
-                    }}
-                  >
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => this.handleEditItem(item.id)}
-                      style={{ margin: "5px" }}
+              {items
+                .filter(
+                  (item) =>
+                    item.name
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase()) ||
+                    item.description
+                      .toLowerCase()
+                      .includes(searchValue.toLowerCase()) ||
+                      (item.age.toString().toLowerCase().includes(searchValue.toLowerCase()))
+                )
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell>{item.name}</TableCell>
+                    <TableCell>{item.description}</TableCell>
+                    <TableCell>{item.age}</TableCell>
+                    <TableCell
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        padding: "5px",
+                      }}
                     >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      style={{ margin: "5px" }}
-                      color="secondary"
-                      onClick={() => this.handleDeleteItem(item.id)}
-                    >
-                      Delete
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => this.handleEditItem(item.id)}
+                        style={{ margin: "5px" }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        style={{ margin: "5px" }}
+                        color="secondary"
+                        onClick={() => this.handleDeleteItem(item.id)}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 23 * emptyRows }}>
                   <TableCell colSpan={4} />
