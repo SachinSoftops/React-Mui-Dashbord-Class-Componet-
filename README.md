@@ -3,23 +3,25 @@
 
 # Video tutorial
 
-    https://youtu.be/XwnZLgIfIvg 
-    ![Alt text](image-1.png)
-    ![Alt text](<Screenshot 2024-02-05 at 2.13.20 PM.png>)
+    https://youtu.be/XwnZLgIfIvg
+    
+![Alt text](image-1.png)
+![Alt text](<Screenshot 2024-02-05 at 2.13.20 PM.png>)
+![Alt text](<Screenshot 2024-02-05 at 2.13.20 PM-1.png>)
 ![Alt text](<Screenshot 2024-02-02 at 12.14.42 PM.png>)
 ![Alt text](<Screenshot 2024-02-04 at 1.00.30 PM.png>)
-    ![Alt text](image.png)
-    ![Alt text](<Screenshot 2024-02-01 at 4.41.45 PM.png>)
-    ![Alt text](<Screenshot 2024-02-04 at 12.50.28 AM.png>)
-    ![Alt text](<Screenshot 2024-02-04 at 12.17.35 PM.png>)
-    ![Alt text](<Screenshot 2024-02-04 at 1.55.12 AM.png>)
-    ![Alt text](<Screenshot 2024-02-04 at 11.22.39 AM.png>)
-![Alt text](<Screenshot 2024-02-01 at 4.41.41 PM.png>) 
-![Alt text](<Screenshot 2024-02-03 at 8.08.12 PM.png>) 
+![Alt text](image.png)
+![Alt text](<Screenshot 2024-02-01 at 4.41.45 PM.png>)
+![Alt text](<Screenshot 2024-02-04 at 12.50.28 AM.png>)
+![Alt text](<Screenshot 2024-02-04 at 12.17.35 PM.png>)
+![Alt text](<Screenshot 2024-02-04 at 1.55.12 AM.png>)
+![Alt text](<Screenshot 2024-02-04 at 11.22.39 AM.png>)
+![Alt text](<Screenshot 2024-02-01 at 4.41.41 PM.png>)
+![Alt text](<Screenshot 2024-02-03 at 8.08.12 PM.png>)
 ![Alt text](<Screenshot 2024-02-03 at 8.08.46 PM.png>)
 ![Alt text](<Screenshot 2024-02-03 at 8.08.01 PM.png>)
 ![Alt text](<Screenshot 2024-02-04 at 12.51.57 PM.png>)
-![Alt text](<Screenshot 2024-02-02 at 6.14.06 PM.png>) 
+![Alt text](<Screenshot 2024-02-02 at 6.14.06 PM.png>)
 
 # Reference
 
