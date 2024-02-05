@@ -7,7 +7,7 @@ import { RouteType } from "./config";
 const generateRoute = (routes: RouteType[]): ReactNode => {
   return routes.map((route, index) => (
     route.index ? (
-      <Route
+      <Route 
         index 
         path={route.path}
         element={<PageWrapper state={route.state}>
